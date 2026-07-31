@@ -1,0 +1,56 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1785317665
+<< pwell >>
+rect -801 -1344 451 1344
+<< psubdiff >>
+rect -765 1274 -705 1308
+rect 355 1274 415 1308
+rect -765 1248 -731 1274
+rect -765 -1274 -731 -1248
+rect 381 1248 415 1274
+rect 381 -1274 415 -1248
+rect -765 -1308 -705 -1274
+rect 355 -1308 415 -1274
+<< psubdiffcont >>
+rect -705 1274 355 1308
+rect -765 -1248 -731 1248
+rect 381 -1248 415 1248
+rect -705 -1308 355 -1274
+<< locali >>
+rect -765 1274 -705 1308
+rect 355 1274 415 1308
+rect -765 1248 -731 1274
+rect -765 -1274 -731 -1248
+rect 381 1248 415 1274
+rect 381 -1274 415 -1248
+rect -765 -1308 -705 -1274
+rect 355 -1308 415 -1274
+use sky130_fd_pr__res_high_po_0p35_G6NFUH  R1
+timestamp 1785019818
+transform 1 0 80 0 1 -226
+box -35 -952 35 952
+use sky130_fd_pr__res_high_po_0p35_GQTRPE  R2
+timestamp 1785019818
+transform 1 0 -260 0 1 -271
+box -35 -907 35 907
+use sky130_fd_pr__res_high_po_0p35_VNWR4D  R3
+timestamp 1785019818
+transform 1 0 -90 0 1 -452
+box -35 -726 35 726
+use sky130_fd_pr__res_high_po_0p35_CDD7FB  R4
+timestamp 1785019818
+transform 1 0 -430 0 1 0
+box -35 -1178 35 1178
+use sky130_fd_pr__res_high_po_0p35_CDD7FB  Rdum1
+timestamp 1785019818
+transform 1 0 -600 0 1 0
+box -35 -1178 35 1178
+use sky130_fd_pr__res_high_po_0p35_G6NFUH  Rdum2
+timestamp 1785019818
+transform 1 0 250 0 1 -226
+box -35 -952 35 952
+<< labels >>
+rlabel psubdiffcont -765 -20 -731 20 0 VSS
+<< end >>

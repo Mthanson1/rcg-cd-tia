@@ -1,0 +1,29 @@
+* SPICE3 file created from tia.ext - technology: sky130A
+
+X0 VSS R5/R1 VSS sky130_fd_pr__res_xhigh_po_0p69 l=7.87
+X1 M3/G M1/G Iin VSS sky130_fd_pr__nfet_01v8_lvt ad=0.30195 pd=2.16 as=0.30195 ps=2.16 w=1.83 l=0.15
+X2 M3/G M1/G Iin VSS sky130_fd_pr__nfet_01v8_lvt ad=0.5673 pd=4.28 as=0.30195 ps=2.16 w=1.83 l=0.15
+X3 Iin M1/G M3/G VSS sky130_fd_pr__nfet_01v8_lvt ad=0.30195 pd=2.16 as=0.30195 ps=2.16 w=1.83 l=0.15
+X4 Iin M1/G M3/G VSS sky130_fd_pr__nfet_01v8_lvt ad=0.30195 pd=2.16 as=0.5673 ps=4.28 w=1.83 l=0.15
+X5 M1/G Iin VSS VSS sky130_fd_pr__nfet_01v8_lvt ad=0.6138 pd=4.58 as=0.3267 ps=2.31 w=1.98 l=0.15
+X6 VSS Iin M1/G VSS sky130_fd_pr__nfet_01v8_lvt ad=0.3267 pd=2.31 as=0.3267 ps=2.31 w=1.98 l=0.15
+X7 VSS Iin M1/G VSS sky130_fd_pr__nfet_01v8_lvt ad=0.3267 pd=2.31 as=0.6138 ps=4.58 w=1.98 l=0.15
+X8 M1/G Iin VSS VSS sky130_fd_pr__nfet_01v8_lvt ad=0.3267 pd=2.31 as=0.3267 ps=2.31 w=1.98 l=0.15
+X9 Vout M3/G R5/R1 VSS sky130_fd_pr__nfet_01v8_lvt ad=0.7887 pd=5.11 as=0.7887 ps=5.11 w=4.78 l=0.15
+X10 Vout M3/G R5/R1 VSS sky130_fd_pr__nfet_01v8_lvt ad=1.4818 pd=10.18 as=0.7887 ps=5.11 w=4.78 l=0.15
+X11 R5/R1 M3/G Vout VSS sky130_fd_pr__nfet_01v8_lvt ad=0.7887 pd=5.11 as=0.7887 ps=5.11 w=4.78 l=0.15
+X12 R5/R1 M3/G Vout VSS sky130_fd_pr__nfet_01v8_lvt ad=0.7887 pd=5.11 as=1.4818 ps=10.18 w=4.78 l=0.15
+X13 VSS R5/R1 sky130_fd_pr__cap_mim_m3_1 l=5 w=17
+X14 VDD M3/G VSS sky130_fd_pr__res_high_po_0p35 l=5.36
+X15 VDD M1/G VSS sky130_fd_pr__res_high_po_0p35 l=4.91
+X16 VDD Vout VSS sky130_fd_pr__res_high_po_0p35 l=3.1
+X17 VSS Iin VSS sky130_fd_pr__res_high_po_0p35 l=7.62
+X18 VSS VSS VSS sky130_fd_pr__res_high_po_0p35 l=7.62
+X19 VSS VSS VSS sky130_fd_pr__res_high_po_0p35 l=7.62
+C0 Vout R5/R1 4.29274f
+C1 Iin VSS 3.18092f
+C2 Vout VSS 2.12197f
+C3 M1/G VSS 2.80707f
+C4 M3/G VSS 2.36627f
+C5 VDD VSS 4.11056f
+C6 R5/R1 VSS 12.93077f
