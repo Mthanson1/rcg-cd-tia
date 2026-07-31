@@ -1,0 +1,26 @@
+* RGC-CD TIA -- operating point / bias check
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0       ; nominal input current = 0 (S1 pulls from gnd)
+Xtia vin vout vdd 0 tia_core
+
+.control
+op
+echo "==== NODE VOLTAGES ===="
+print v(vin) v(xtia.d1) v(xtia.d2) v(vout) v(xtia.s3)
+echo "==== BRANCH CURRENTS (mA) ===="
+let iR1 = (v(vdd)-v(xtia.d1))/2e3
+let iR2 = (v(vdd)-v(xtia.d2))/2e3
+let iR3 = (v(vdd)-v(vout))/6e3
+let iR4 = v(vin)/2e3
+print iR1*1e3 iR2*1e3 iR3*1e3 iR4*1e3
+echo "==== TOTAL SUPPLY CURRENT / POWER ===="
+let itot = -i(Vdd)
+let ptot = itot*v(vdd)
+print itot*1e3 ptot*1e3
+.endc
+.end

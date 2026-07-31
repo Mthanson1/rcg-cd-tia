@@ -1,0 +1,34 @@
+* RGC-CD TIA -- input-referred current noise
+* Integrated 1kHz..631MHz (loaded f-3dB of the gm/Id design). Iin is the
+* input source, so inoise_total is the input-referred current noise in A_rms.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+* Loaded (deployed) configuration: same C_T / C_L as tb_ac_realistic so the
+* input-referred noise is integrated over the true 631 MHz transimpedance.
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+CT   vin  0 500f
+CL   vout 0 1p
+
+.control
+* sweep temperature like the doc's table (27..75 C)
+foreach tc 27 45 75
+  set temp = $tc
+  noise v(vout) Iin dec 100 1k 631meg 1
+  print inoise_total onoise_total
+  * inoise_total / onoise_total are already integrated RMS (A / V)
+  let in_nA  = inoise_total*1e9
+  let on_uV  = onoise_total*1e6
+  echo "T=$tc C : Iin,rms = $&in_nA nA_rms ; Vout,rms = $&on_uV uV_rms"
+end
+
+* input-referred current-noise spectral density at 27 C for plotting
+set temp = 27
+noise v(vout) Iin dec 100 1k 631meg 1
+setplot noise1
+wrdata ../artifacts/noise_spectrum.dat inoise_spectrum onoise_spectrum
+.endc
+.end

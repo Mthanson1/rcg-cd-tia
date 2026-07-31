@@ -1,0 +1,50 @@
+* RGC-CD TIA -- AC frequency response WITH realistic input + ADC load caps.
+* The doc's original tb_ac had no Cin/Cload, so the intrinsic RGC pole sits
+* near 2 GHz and the CD zero is left uncompensated -> a large resonant peak.
+* In a real deployment the dominant pole is set by the VMM current-mirror input
+* capacitance and the ADC load capacitance; once that pole exists the CD zero
+* cancels it and the response is flat.  This TB adds C_T = 500 fF (input) and
+* C_L = 1 pF (ADC load), matching tb_stb's loading.
+*
+* Two runs are written so the plot can show the capacitive degenerator's effect:
+*   ac_response_loaded.dat  -- full TIA (with C1) + RGC-only node d1
+*   ac_response_nocap.dat   -- degeneration cap removed (C1=0): the CD zero is
+*                              gone, so v(vout) rolls off at the load pole.
+* Iin ac=1 => v(vout) magnitude IS the transimpedance in ohms.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+CT   vin  0 500f
+CL   vout 0 1p
+
+.control
+* --- WITH the capacitive degenerator (nominal C1) --------------------
+ac dec 100 1k 10G
+meas ac gdc  find vdb(vout) at=1k
+let  tgt = gdc - 3
+meas ac fc   when vdb(vout)=tgt fall=1
+meas ac gpk  max vdb(vout) from=1meg to=10g
+let  peaking = gpk - gdc
+echo "==== WITH C1 : DC gain / peaking / -3dB ===="
+print gdc
+print peaking
+print fc
+wrdata ../artifacts/ac_response_loaded.dat vdb(vout) vp(vout) vdb(xtia.d1)
+
+* --- WITHOUT the capacitive degenerator (C1 -> 0) --------------------
+alterparam CDEG=0
+reset
+ac dec 100 1k 10G
+meas ac gdc0 find vdb(vout) at=1k
+let  tgt0 = gdc0 - 3
+meas ac fc0  when vdb(vout)=tgt0 fall=1
+echo "==== WITHOUT C1 : DC gain / -3dB ===="
+print gdc0
+print fc0
+wrdata ../artifacts/ac_response_nocap.dat vdb(vout)
+.endc
+.end

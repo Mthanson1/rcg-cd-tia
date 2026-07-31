@@ -1,0 +1,38 @@
+* RGC-CD TIA -- DC transimpedance gain
+* Sweeps input current over the design input range (-5..+20 uA)
+* and measures dVout/dIin (full TIA) and dVD1/dIin (RGC only).
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0
+Xtia vin vout vdd 0 tia_core
+
+.control
+dc Iin -5u 20u 0.05u
+
+* --- full TIA transimpedance (matches doc's two-point method) ---
+meas dc vo_a  find v(vout)     at=1.03u
+meas dc vo_b  find v(vout)     at=6.683u
+let a_tia = (vo_b - vo_a)/(6.683u - 1.03u)
+* --- RGC-only transimpedance at node D1 ---
+meas dc vd_a  find v(xtia.d1)  at=1.03u
+meas dc vd_b  find v(xtia.d1)  at=6.683u
+let a_rgc = (vd_b - vd_a)/(6.683u - 1.03u)
+
+echo "==== nominal output (Iin=0) ===="
+meas dc vo_0 find v(vout) at=0
+echo "==== TIA transimpedance ===="
+print a_tia
+let a_tia_db = 20*log10(abs(a_tia))
+print a_tia_db
+echo "==== RGC-only transimpedance (node D1) ===="
+print a_rgc
+let a_rgc_db = 20*log10(abs(a_rgc))
+print a_rgc_db
+
+* write the sweep for inspection
+wrdata ../artifacts/dc_sweep.dat v(vout) v(xtia.d1)
+.endc
+.end

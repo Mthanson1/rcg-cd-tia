@@ -1,0 +1,23 @@
+* RGC-CD TIA -- operating point / bias check, POST-LAYOUT (parasitic-extracted).
+* Caps don't move the DC bias, so this should track tb_op_dev almost exactly;
+* it's a sanity check that the extracted netlist is DC-consistent.
+* Extracted top cell:  .subckt tia  Iin VDD VSS Vout   (that port order!)
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ../verify/tia_pex.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0
+* port order: Iin VDD VSS Vout
+Xtia vin vdd 0 vout tia
+
+.control
+op
+echo "==== NODE VOLTAGES ===="
+print v(vin) v(vout)
+echo "==== TOTAL SUPPLY CURRENT / POWER (mA / mW) ===="
+let itot = -i(Vdd)
+let ptot = itot*v(vdd)
+print itot*1e3 ptot*1e3
+.endc
+.end

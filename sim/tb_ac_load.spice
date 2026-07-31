@@ -1,0 +1,36 @@
+* RGC-CD TIA -- AC response vs input/load capacitance
+* The doc's testbench had no Cin/Cload; the doc notes the real
+* dominant pole comes from the MVM current-mirror input cap and
+* the ADC load cap. Sweep CLOAD to find a physical bandwidth.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8 CIN=50f
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+Cinp vin  0 {CIN}
+Clod vout 0 1f
+
+.control
+* RGC-only intrinsic corner first (no CD influence at node d1)
+ac dec 100 1k 20G
+meas ac grgc_dc  find vdb(xtia.d1) at=1k
+let  trgc = grgc_dc - 3
+meas ac f3db_rgc when vdb(xtia.d1)=trgc fall=1
+echo "RGC-only DC gain = $&grgc_dc dBohm ; f3db(RGC) below:"
+print f3db_rgc
+
+* full-TIA -3dB vs load cap
+foreach cl 0 50f 100f 200f 500f
+  alter Clod = $cl
+  ac dec 100 1k 20G
+  meas ac gdc  find vdb(vout) at=1k
+  let tt = gdc - 3
+  meas ac fc   when vdb(vout)=tt fall=1
+  meas ac gpk  max vdb(vout) from=10meg to=2g
+  echo "CLOAD=$cl : DCgain=$&gdc dBohm  peak=$&gpk dBohm  f3dB below:"
+  print fc
+end
+.endc
+.end

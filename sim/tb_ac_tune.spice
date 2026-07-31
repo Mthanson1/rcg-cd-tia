@@ -1,0 +1,28 @@
+* RGC-CD TIA -- CD-stage re-tune sweep for sky130A
+* Sweeps degeneration cap C1 (=CDEG). Peak height ~ gm3*R5 is
+* fixed by the degeneration ratio; C1 sets the zero frequency.
+* Goal: move the CD zero up to the ~2 GHz RGC pole so the boost
+* cancels the RGC rolloff -> flat, extended response.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+
+.control
+foreach cd 450f 50f 20f 15f 13.5f 10f 6f
+  alterparam CDEG = $cd
+  reset
+  ac dec 100 1k 30G
+  meas ac gdc find vdb(vout) at=1k
+  let  tgt = gdc - 3
+  meas ac fc  when vdb(vout)=tgt fall=1
+  meas ac gpk max vdb(vout) from=1meg to=10g
+  let peaking = gpk - gdc
+  echo "C1=$cd : DCgain=$&gdc dBohm  peaking=$&peaking dB  f-3dB below:"
+  print fc
+end
+.endc
+.end

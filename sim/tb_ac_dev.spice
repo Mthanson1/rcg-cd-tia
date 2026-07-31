@@ -1,0 +1,28 @@
+* RGC-CD TIA -- AC frequency response, REAL sky130 devices (tia_core_dev).
+* With-C1 run only (the ideal tb_ac_realistic's CDEG=0 sweep is N/A once C1 is
+* a device).  Realistic loading C_T=500 fF (input) + C_L=1 pF (ADC), matching
+* tb_ac_realistic / tb_stb.  Iin ac=1 => |v(vout)| is the transimpedance [ohm].
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core_dev.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+CT   vin  0 500f
+CL   vout 0 1p
+
+.control
+ac dec 100 1k 10G
+meas ac gdc  find vdb(vout) at=1k
+let  tgt = gdc - 3
+meas ac fc   when vdb(vout)=tgt fall=1
+meas ac gpk  max vdb(vout) from=1meg to=10g
+let  peaking = gpk - gdc
+echo "==== DEV WITH C1 : DC gain [dBohm] / peaking [dB] / -3dB [Hz] ===="
+print gdc
+print peaking
+print fc
+wrdata ../artifacts/ac_response_loaded_dev.dat vdb(vout) vp(vout) vdb(xtia.d1)
+.endc
+.end

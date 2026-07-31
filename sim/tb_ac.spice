@@ -1,0 +1,32 @@
+* RGC-CD TIA -- AC frequency response (transimpedance)
+* Iin ac=1  => v(vout) magnitude IS the transimpedance in ohms.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+Xtia vin vout vdd 0 tia_core
+
+.control
+ac dec 100 1k 10G
+
+* full TIA (vout) and RGC-only (D1) responses
+meas ac gdc_db   find vdb(vout)    at=1k
+let  targ = gdc_db - 3
+meas ac f3db_tia when vdb(vout)=targ fall=1
+meas ac gpk_db   max vdb(vout)     from=10meg to=1g
+meas ac grgc_db  find vdb(xtia.d1) at=1k
+
+echo "==== full-TIA DC transimpedance (dBohm) ===="
+print gdc_db
+echo "==== full-TIA -3dB corner (Hz) ===="
+print f3db_tia
+echo "==== peak gain in 10M-1G band (dBohm) ===="
+print gpk_db
+echo "==== RGC-only DC gain (dBohm) ===="
+print grgc_db
+
+wrdata ../artifacts/ac_response.dat vdb(vout) vp(vout) vdb(xtia.d1)
+.endc
+.end

@@ -1,0 +1,33 @@
+* RGC-CD TIA -- AC frequency response, POST-LAYOUT (parasitic-extracted).
+* Uses verify/tia_pex.spice: real sky130 devices at as-drawn dims PLUS the
+* magic-extracted parasitic caps (coupling + substrate) on every net.  This is
+* the truest picture of silicon BW/peaking -- it adds the wiring/junction cap
+* loading that tia_core_dev (device-only) omits.
+* Extracted top cell:  .subckt tia  Iin VDD VSS Vout
+* Realistic loading C_T=500 fF (input) + C_L=1 pF (ADC), matching tb_ac_dev.
+* Iin ac=1 => |v(vout)| is the transimpedance [ohm].
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ../verify/tia_pex.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0 ac 1
+* port order: Iin VDD VSS Vout
+Xtia vin vdd 0 vout tia
+CT   vin  0 500f
+CL   vout 0 1p
+
+.control
+ac dec 100 1k 10G
+meas ac gdc  find vdb(vout) at=1k
+let  tgt = gdc - 3
+meas ac fc   when vdb(vout)=tgt fall=1
+meas ac gpk  max vdb(vout) from=1meg to=10g
+let  peaking = gpk - gdc
+echo "==== PEX (post-layout) : DC gain [dBohm] / peaking [dB] / -3dB [Hz] ===="
+print gdc
+print peaking
+print fc
+wrdata ../artifacts/ac_response_loaded_pex.dat vdb(vout) vp(vout)
+.endc
+.end

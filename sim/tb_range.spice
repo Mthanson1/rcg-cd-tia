@@ -1,0 +1,25 @@
+* RGC-CD TIA -- input current range / linearity
+* Wide DC sweep to locate where the TIA leaves its linear region,
+* especially for NEGATIVE input current (the doc's key limitation).
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0
+Xtia vin vout vdd 0 tia_core
+
+.control
+dc Iin -700u 500u 2u
+* small-signal transimpedance vs operating point (dVout/dIin)
+let gain = deriv(v(vout))
+wrdata ../artifacts/range_sweep.dat v(vout) v(vin) v(xtia.d1) v(xtia.s3) gain
+* report a few probe points
+foreach ii -50u -20u -10u -5u 0 5u 20u 40u
+  meas dc vo   find v(vout)    at=$ii
+  meas dc vs1  find v(vin)     at=$ii
+  meas dc vd1  find v(xtia.d1) at=$ii
+  echo "Iin=$ii : Vout=$&vo  Vs1=$&vs1  Vd1=$&vd1"
+end
+.endc
+.end

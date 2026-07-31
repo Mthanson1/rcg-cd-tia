@@ -1,0 +1,35 @@
+* RGC-CD TIA -- loop-gain / phase margin of the RGC regulation loop
+* Breaks the aux (M2->M1 gate) feedback loop using tia_core's AGATE source:
+* with AGATE=1, Vinj injects 1 V AC while staying a 0 V DC short, so the bias
+* point is preserved and the loop is opened only for AC.
+*   loop gain  L(s) = -V(d2)/V(g1)   (d2 = M2 drain/driver, g1 = M1 gate/load)
+*   phase margin PM  = 180 deg + phase(L) at the |L| = 0 dB crossover.
+* Real loads (C_T at input, C_L = 1 pF ADC) included -- they shape the loop.
+.lib $PDK_ROOT/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ./tia_core_dev.spice
+
+.param VDD=1.8
+Vdd  vdd 0 {VDD}
+Iin  0   vin dc 0
+Xtia vin vout vdd 0 tia_core AGATE=1
+CT   vin  0 500f
+CL   vout 0 1p
+
+.control
+set units=degrees
+ac dec 200 1 500G
+let Lgain = -v(xtia.d2)/v(xtia.g1)
+let Lm = db(Lgain)
+let Lp = ph(Lgain)
+* DC loop gain and unity-gain (0 dB) crossover
+meas ac dcgain_db find Lm  at=1
+meas ac f_0db     when Lm=0 fall=1
+meas ac ph_0db    find Lp  when Lm=0 fall=1
+let pm = 180 + ph_0db
+echo "==== RGC loop stability ===="
+print dcgain_db
+print f_0db
+print pm
+wrdata ../artifacts/loopgain_dev.dat Lm Lp
+.endc
+.end
