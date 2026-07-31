@@ -1,0 +1,31 @@
+# Transient tool output (keep the dir structure, ignore the contents)
+artifacts/*
+!artifacts/.gitkeep
+!artifacts/xschem_netlist/
+artifacts/xschem_netlist/*
+!artifacts/xschem_netlist/.gitkeep
+
+# Generated verification reports (keep the verify/ dir + any tracked scripts)
+verify/*.rpt
+verify/*.log
+verify/*.report
+verify/*.ext
+verify/*.spice
+
+# Common EDA scratch
+*.log
+*.raw
+*.spiceinit.bak
+xschem.log
+
+# LaTeX doc artifacts
+docs/*.aux
+docs/*.bbl
+docs/*.blg
+docs/*.fdb_latexmk
+docs/*.fls
+docs/*.log
+
+# Python artifacts
+__pycache__/
+*.py[cod]

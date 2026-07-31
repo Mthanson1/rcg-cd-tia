@@ -1,0 +1,4 @@
+# Project xschemrc -- RGC-CD TIA (sky130A)
+# Loads the sky130A PDK xschem setup (symbols, models, netlisting rules).
+# Add project-specific xschem overrides below the source line.
+source $env(PDK_ROOT)/sky130A/libs.tech/xschem/xschemrc
