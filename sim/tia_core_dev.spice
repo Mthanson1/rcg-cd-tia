@@ -4,7 +4,7 @@
 * Same subckt name / ports / AGATE loop-break as sim/tia_core.spice, but the
 * ideal RR1..RR5 lumped resistors and the ideal C1 are replaced by the actual
 * sky130 devices at the AS-DRAWN layout dimensions (see verify/tia_lay.spice /
-* ip/tia.sch), and M1/M2/M3 use the layout finger counts (nf = 4 / 4 / 8):
+* ip/tia.sch), and M1/M2/M3 use the layout finger counts (nf = 4 / 4 / 4):
 *
 *   R1  d1  <-> vdd   res_high_po_0p35   l=5.36   (ideal target 6.5k)
 *   R2  d2  <-> vdd   res_high_po_0p35   l=4.91   (ideal target 6.0k)
@@ -20,7 +20,7 @@
 * ============================================================
 .subckt tia_core vin vout vdd vss
 + W1=7.3  W2=7.9  L12=0.15 NF12=4
-+ W3=19.1 L3=0.15  NF3=8
++ W3=19.1 L3=0.15  NF3=4
 + AGATE=0
 
 * --- RGC input stage ---------------------------------------
