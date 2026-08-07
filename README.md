@@ -12,10 +12,10 @@ Reconstruction + layout/PEX of the design documented in `docs/main.tex`.
 ip/        xschem schematic (tia.sch)      (tracked)
 layout/    magic .mag layout cells         (tracked)
 sim/       testbenches + run scripts       (tracked)
-verify/    DRC / LVS / PEX scripts         (reports git-ignored)
+verify/    DRC/LVS/PEX scripts + reports   (tracked)
 env/       .magicrc .xschemrc .spiceinit   (tracked)
 docs/      design doc (LaTeX) + figures    (tracked)
-tapeout/   signed-off final GDS + reports  (tracked)
+tapeout/   signed-off final GDS            (tracked)
 artifacts/ transient netlists/logs/GDS     (git-ignored)
 extern/    sky130A-gmid submodule (gm/Id)  (tracked)
 ```

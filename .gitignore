@@ -11,6 +11,8 @@ verify/*.log
 verify/*.report
 verify/*.ext
 verify/*.spice
+# Keep the LVS/DRC sign-off reports
+!verify/lvs.report
 
 # Common EDA scratch
 *.log
@@ -25,6 +27,7 @@ docs/*.blg
 docs/*.fdb_latexmk
 docs/*.fls
 docs/*.log
+docs/*.synctex.gz
 
 # Python artifacts
 __pycache__/

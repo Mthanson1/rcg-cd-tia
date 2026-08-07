@@ -18,9 +18,6 @@ magic -dnull -noconsole -rcfile env/.magicrc verify/write_gds.tcl 2>&1 \
 
 GDS="tapeout/tia.gds"
 
-echo "### Heal generated rpm (fix rpm.1a min width in resbank)"
-klayout -b -r verify/heal_rpm.py -rd gds="$GDS" 2>&1 \
-      | grep -iE "heal_rpm|error" | grep -vi "INFO\]" || true
 if [ -s "$GDS" ]; then
   echo
   echo "### GDS written: $GDS ($(du -h "$GDS" | cut -f1))"

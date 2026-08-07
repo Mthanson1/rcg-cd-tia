@@ -1,0 +1,94 @@
+
+Circuit 1 cell sky130_fd_pr__res_high_po_0p35 and Circuit 2 cell sky130_fd_pr__res_high_po_0p35 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__res_high_po_0p35 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__res_high_po_0p35 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__res_high_po_0p35  |Circuit 2: sky130_fd_pr__res_high_po_0p35  
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__res_high_po_0p35 and sky130_fd_pr__res_high_po_0p35 are equivalent.
+
+Circuit 1 cell sky130_fd_pr__res_xhigh_po_0p69 and Circuit 2 cell sky130_fd_pr__res_xhigh_po_0p69 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__res_xhigh_po_0p69 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__res_xhigh_po_0p69 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__res_xhigh_po_0p69 |Circuit 2: sky130_fd_pr__res_xhigh_po_0p69 
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__res_xhigh_po_0p69 and sky130_fd_pr__res_xhigh_po_0p69 are equivalent.
+
+Circuit 1 cell sky130_fd_pr__nfet_01v8_lvt and Circuit 2 cell sky130_fd_pr__nfet_01v8_lvt are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8_lvt is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__nfet_01v8_lvt is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__nfet_01v8_lvt     |Circuit 2: sky130_fd_pr__nfet_01v8_lvt     
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__nfet_01v8_lvt and sky130_fd_pr__nfet_01v8_lvt are equivalent.
+
+Circuit 1 cell sky130_fd_pr__cap_mim_m3_1 and Circuit 2 cell sky130_fd_pr__cap_mim_m3_1 are black boxes.
+Warning: Equate pins:  cell sky130_fd_pr__cap_mim_m3_1 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sky130_fd_pr__cap_mim_m3_1 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sky130_fd_pr__cap_mim_m3_1      |Circuit 2: sky130_fd_pr__cap_mim_m3_1      
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sky130_fd_pr__cap_mim_m3_1 and sky130_fd_pr__cap_mim_m3_1 are equivalent.
+Flattening unmatched subcell sky130_fd_pr__res_xhigh_po_0p69_2YV6RR in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__nfet_01v8_lvt_L86FKH in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__nfet_01v8_lvt_Z2NKZQ in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__nfet_01v8_lvt_Y8Z6EY in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__cap_mim_m3_1_LFD929 in circuit tia (0)(1 instance)
+Flattening unmatched subcell resbank in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__res_high_po_0p35_G6NFUH in circuit tia (0)(2 instances)
+Flattening unmatched subcell sky130_fd_pr__res_high_po_0p35_GQTRPE in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__res_high_po_0p35_VNWR4D in circuit tia (0)(1 instance)
+Flattening unmatched subcell sky130_fd_pr__res_high_po_0p35_CDD7FB in circuit tia (0)(2 instances)
+
+Class tia (0):  Merged 10 parallel devices.
+Class tia (1):  Merged 1 parallel devices.
+Subcircuit summary:
+Circuit 1: tia                             |Circuit 2: tia                             
+-------------------------------------------|-------------------------------------------
+sky130_fd_pr__res_xhigh_po_0p69 (1)        |sky130_fd_pr__res_xhigh_po_0p69 (1)        
+sky130_fd_pr__nfet_01v8_lvt (12->3)        |sky130_fd_pr__nfet_01v8_lvt (3)            
+sky130_fd_pr__cap_mim_m3_1 (1)             |sky130_fd_pr__cap_mim_m3_1 (1)             
+sky130_fd_pr__res_high_po_0p35 (6->5)      |sky130_fd_pr__res_high_po_0p35 (6->5)      
+Number of devices: 10                      |Number of devices: 10                      
+Number of nets: 7                          |Number of nets: 7                          
+---------------------------------------------------------------------------------------
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: tia                             |Circuit 2: tia                             
+-------------------------------------------|-------------------------------------------
+Vout                                       |vout                                       
+Iin                                        |Iin                                        
+VDD                                        |VDD                                        
+VSS                                        |VSS                                        
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes tia and tia are equivalent.
+
+Final result: Circuits match uniquely.
+.
