@@ -666,13 +666,25 @@ Future work:
 \appendix
 \section{Appendix: Input-Architecture Comparison Study}
 \label{app:arch}
-This study pre-dates the finalised design. It was an early exploration at a higher
-$\sim$1.15 mW operating point with \emph{unloaded} testbenches (no $C_T/C_L$) and noise
-integrated over the old $144\,MHz$ band, so its absolute numbers do not match the
-$g_m/I_D$ design of record of Section~\ref{sec:flow} ($0.33\,mW$, $59.4\,dB\Omega$, loaded
-to $631\,MHz$). In particular its ``Baseline'' is the original RGC at that operating point,
-not the finalised converter. What carries over is the \emph{relative} comparison between
-topologies and the qualitative findings below, not the tabulated absolutes.
+The RGC-CD converter documented above was the committed topology for this work,
+adapted from the low-power TIA of \cite{Low-Power_TIA} and carried through to
+layout. This appendix collects a separate design-space study that pre-dates the
+finalised $g_m/I_D$ sizing: before freezing the design, four candidate input
+architectures were prototyped in ngspice to understand the biasing, gain-definition
+and noise trade-offs that motivate the conclusions of Section~\ref{sec:linearity}.
+Two results carry forward. First, the study confirms that the chosen RGC's
+transimpedance is PVT-robust (Section~\ref{app:pvt}): because $Z_T\approx R_1$ is
+set by a resistor rather than by device transconductance, the gain moves by only
+$\sim$0.5 dB across corners, at the cost of a bias current that scales with the
+supply. Second, it identifies cascoded shunt-feedback as the most promising
+\emph{next} direction, which is the basis for the symmetric-operation and load
+co-design items of the Future Work list. The study was run at a higher
+$\sim$1.15 mW operating point with \emph{unloaded} testbenches (no $C_T/C_L$) and
+noise integrated over the old $144\,MHz$ band, so its absolute numbers do not match
+the design of record of Section~\ref{sec:flow} ($0.33\,mW$, $59.4\,dB\Omega$, loaded
+to $631\,MHz$); its ``Baseline'' is the original RGC at that operating point, not
+the finalised converter. The meaningful result is the \emph{relative} comparison
+between topologies and the qualitative findings below, not the tabulated absolutes.
 
 To evaluate the biasing, gain-definition and noise trade-offs raised in the
 conclusion, four TIA input architectures were prototyped in ngspice on SKY130A.
@@ -714,6 +726,7 @@ pre-layout testbenches include no input or load capacitance (Section
 meaningful result, not the absolute bandwidth.
 
 \subsection{PVT Observations}
+\label{app:pvt}
 Across the ss/tt/ff corners the transimpedance of every RGC-based variant moves by
 only $\sim$0.5 dB, because $Z_T\approx R_1$ is set by a resistor rather than by
 device transconductance. The original design's \emph{gain} is therefore more
